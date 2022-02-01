@@ -9,6 +9,8 @@ variables.env
 *.env
 .keystone
 *.db
+cloudinary/
+.idea/
 
 /finished-application
 /stepped-solutions
