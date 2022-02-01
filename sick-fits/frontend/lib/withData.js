@@ -5,9 +5,11 @@ import { createUploadLink } from 'apollo-upload-client';
 import withApollo from 'next-with-apollo';
 import { endpoint, prodEndpoint } from '../config';
 
+// boilerplate for apollo client
 function createClient({ headers, initialState }) {
   return new ApolloClient({
     link: ApolloLink.from([
+      // error handling link, just helpful to log the errors
       onError(({ graphQLErrors, networkError }) => {
         if (graphQLErrors)
           graphQLErrors.forEach(({ message, locations, path }) =>
@@ -15,12 +17,14 @@ function createClient({ headers, initialState }) {
               `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
             )
           );
+        // happens if backend is down, or cors issues
         if (networkError)
           console.log(
             `[Network error]: ${networkError}. Backend is unreachable. Is it running?`
           );
       }),
       // this uses apollo-link-http under the hood, so all the options here come from that package
+      // 3rd party package that allows for uploading images with apollo
       createUploadLink({
         uri: process.env.NODE_ENV === 'development' ? endpoint : prodEndpoint,
         fetchOptions: {
@@ -30,6 +34,7 @@ function createClient({ headers, initialState }) {
         headers,
       }),
     ]),
+    // where will we be storing the cache? Usually in the browser
     cache: new InMemoryCache({
       typePolicies: {
         Query: {
