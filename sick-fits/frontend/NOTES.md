@@ -9,7 +9,7 @@ In Next.js you need to hook the `ServerStyleSheet` up to the `getInitialProps` h
 That will wait until that method has been resolved before it sends the data off from the server to the browser.
 
 Put it at the top of `_document.js`:
-```js
+```ts
 static getInitialProps({ renderPage }) {
 const sheet = new ServerStyleSheet();
 const page = renderPage(
@@ -32,7 +32,7 @@ Something is different between the server and the client
 Warning: ... did not match. Server: ... Client: ...
 ```
 In the case of `className did not match`, you should probably implement the style flickers solution written above.
-Remove the `.next` (cache) folder if there are no changes.
+And/Or: Remove the `.next` (cache) folder if there are no changes.
 
 ## Apollo
 A `provider` in React is a component that usually lives very high in your application.
@@ -41,4 +41,21 @@ The Apollo client is at an application level, so that anywhere you can fetch dat
 
 In `_app.js` we wrap the whole application in the `ApolloProvider`.
 
-// 6:22
+## Functions
+
+### Formatting currencies
+This is native in node:
+```ts
+  const options = {
+    style: 'currency',
+    currency: 'EUR',
+    minimumFractionDigits: 2,
+  };
+
+  const formatter = new Intl.NumberFormat('en-US', options);
+  
+  formatter.format(1203)
+```
+
+### Custom UseForm hook (See `libs/useForm.js`)
+To handle the states of the several input fields of a form.
