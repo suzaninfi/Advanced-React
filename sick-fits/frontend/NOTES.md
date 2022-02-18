@@ -59,3 +59,6 @@ This is native in node:
 
 ### Custom UseForm hook (See `libs/useForm.js`)
 To handle the states of the several input fields of a form.
+
+#### fieldset
+Use `<fieldset>` to group related fields on a form, and for example set them all as disabled at the same time.
