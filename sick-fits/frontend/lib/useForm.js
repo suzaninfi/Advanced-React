@@ -1,10 +1,15 @@
 // own custom hook to tuck away the complexity of dealing with
 // a state with multiple fields
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export const useForm = (initial = {}) => {
   // create a state object
   const [inputs, setInputs] = useState(initial);
+  const initialValues = Object.values(initial).join('');
+
+  useEffect(() => {
+    setInputs(initial);
+  }, [initialValues]);
 
   const handleChange = (event) => {
     let { value, name, type } = event.target;
